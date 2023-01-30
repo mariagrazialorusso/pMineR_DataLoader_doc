@@ -1,0 +1,79 @@
+# Word translation and grouping functions: applyFilter() and getTranslation() 
+```{r, echo=FALSE, eval=TRUE, results= 'hide',warning=FALSE, message=FALSE}
+
+library(pMineR)
+objDL<-dataLoader()
+
+objDL$load.csv(nomeFile = "EventLog1.csv", IDName = "ID",EVENTName = "Event",dateColumnName = "Date",sep  = ",",quote = "",format.column.date = "%Y-%m-%d")
+
+obj.out<-objDL$getData()
+obj.out$arrayAssociativo
+obj.out$MMatrix
+obj.out$pat.process[["1"]]
+
+
+```
+
+**applyFilter()**  function allows filtering on the Event Log based on:
+
+ -	Specific event: using “array.events.to.remove” input to explicit the label of the events to remove;
+ -	Specific patient: using “array.pazienti.to.keep” or “array.pazienti.to.remove” to explicit the ID of cases to keep (or to remove);
+ -	Specific attribute values: using “remove.events.by.attribute.name” input (or “remove.patients.by.attribute.name”) to remove event (or cases) according to the value (“by.arr.attribute.value”) of a specific attribute. 
+ 
+The function could give different output based on the value for the **“whatToReturn”** input: 
+
+ -	whatToReturn= _"itself"_ will return DataLoader object itself;
+ -	whatToReturn= _“csv”_ will return a new modified Event Log as a new data frame
+ -	whatToreturn= _“dataLoader”_ will return a new DataLoader object 
+ 
+ Suppose we want to remove all rows that correspond to "Biopsy" events:
+ 
+```{r,results= 'hide',warning=FALSE, message=FALSE}
+new_EL<-objDL$applyFilter(array.events.to.remove = c("Biopsy"),whatToReturn = "csv")
+```
+```{r}
+unique(new_EL$Event)
+```
+ 
+ 
+
+**getTransalation()** function allows to modify event label according to a new dictionary that the user may upload using the **add.Dictionary()** function. 
+
+addDictionary() function adds dictionaries in order, afterward, to translate or group some event name. the new dictionary should be a csv file, consisting of two columns: the first one for the original event labels and the second one for the new labels. The addDictionary function will require as input:
+
+ -	Dictionary file name;
+ -	Separator (default “,”)
+ -	dict.name: name for the new dictionary (default “main”)
+ -	column.event.name: name of the first column of the csv file (referred to the actual event Label)
+ 
+Once the new dictionaries are loaded you can apply them using the getTranslation(), which has the following inputs:
+
+ -	dict.name:  name of the dictionary to use
+ -	column.name: dictionary column name containing the new labels
+ -	toReturn: for explicit the kind of the desired output (see whatToReturn output of applyFilter() function)
+ 
+Let's try using the methods just listed to change the event label "MedicalVisit" to "Medical Visit". To do so we will use the following dictionary:
+```{r}
+read.csv("newDictionary.csv",sep = ";",header = T,quote = "")
+```
+
+At first we have to load the new dictionary with the addDictionary function:
+
+```{r, echo=TRUE, eval=TRUE, results= 'hide',warning=FALSE, message=FALSE}
+objDL$addDictionary(fileName = "newDictionary.csv",
+                    sep = ";",
+                    dict.name = "dict1",
+                    column.event.name = "oldLabel")
+
+```
+
+Then using getTranslation, the dictionary can be used ()
+```{r,echo=TRUE, eval=TRUE, results= 'hide',warning=FALSE, message=FALSE}
+newEL<-objDL$getTranslation(column.name = "newLabel",dict.name = "dict1",toReturn = "csv")
+
+```
+
+```{r}
+unique(newEL$Event)
+```
+

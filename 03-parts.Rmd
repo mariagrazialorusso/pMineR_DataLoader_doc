@@ -1,0 +1,61 @@
+# Access structured data function: getData()
+```{r, echo=FALSE, eval=TRUE, results= 'hide',warning=FALSE, message=FALSE}
+
+library(pMineR)
+objDL<-dataLoader()
+
+objDL$load.csv(nomeFile = "EventLog1.csv", IDName = "ID",EVENTName = "Event",dateColumnName = "Date",sep  = ",",quote = "",format.column.date = "%Y-%m-%d")
+
+obj.out<-objDL$getData()
+obj.out$arrayAssociativo
+obj.out$MMatrix
+obj.out$pat.process[["1"]]
+
+
+```
+
+
+
+
+getData function returns as output a list of items. The following are the principal ones:
+
+ -	**arrayAssociativo**: character array containing all the event labels
+ 
+
+```{r}
+obj.out$arrayAssociativo
+```
+
+  "BEGIN" and "END"
+
+ 
+ -	**MMatrix**: a square matrix containing on the rows and columns the labels of possible events. this matrix  shows in each cell the number of patients whose trace is characterized by a row event successively followed by a column event.
+ 
+```{r}
+obj.out$MMatrix
+```
+ 
+ 
+
+ -	**MMatrix.perc**: as MMatrix but normalized by the total number of cases
+ 
+```{r}
+obj.out$MMatrix.perc
+```
+ -	**Pat.process**: a list in which each component represents a sub-portion of the Event Log (with the addition of a column for time difference between each event and the first event in the trace, used as starting time) related to a single case. Each item in the list is accessed with the case ID.
+ 
+```{r}
+obj.out$pat.process[["12"]]
+```
+
+  - **wordSequence.raw**: a charachter array list, in which each element contains the event labels that make up the individual case trace. Each element can be accessed with the case ID.
+  
+```{r}
+obj.out$wordSequence.raw[["12"]]
+```
+
+
+
+
+
+

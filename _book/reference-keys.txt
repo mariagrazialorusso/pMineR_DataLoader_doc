@@ -1,0 +1,5 @@
+section
+constructor-method-dataloader
+loading-functions-load.csv-load.data.frame
+access-structured-data-function-getdata
+word-translation-and-grouping-functions-applyfilter-and-gettranslation

@@ -1,0 +1,21 @@
+--- 
+title: "Data Loader"
+author: "PM liquid lab"
+date: "`r Sys.Date()`"
+site: https://github.com/PMLiquidLab
+documentclass: book
+bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+description: 
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+---
+
+# Class Introduction
+
+This class includes methods that handle EventLog loading and data preprocessing.
+It offers tools for Event Log word translation and/or grouping using a specified dictionary, loading arrays of dataLoader objects (used for storing structured data from which the functionality of the other pMinerR classes can be used) and manipulating them to create various displays.
+In this brief documentation, the class's primary methods will be discussed, and usage examples from a sample Event Log will be provided.
+
+

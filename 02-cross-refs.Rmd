@@ -1,0 +1,62 @@
+# Loading functions: load.csv(), load.data.frame()
+
+Both of the loading functions operate identically, what differs is the way the function receives the event log as input.
+When using the **load.csv** function, a.csv file is requested as input; however, when using the **load.data.frame** function, the event log provided as input must be a data frame.
+
+The following inputs must be given and are mandatory for the correct loading:
+
+ -	**IDName**: name of EL column for case ID 
+ -	**EVENTName**: name of EL column for Event label
+ -	**dateColumnName**: name for the Date column, 
+ -	**format.column.date** = date format (default:"_%d/%m/%Y %H:%M:%S"_) 
+
+If the load. csv function is performed, it is important to enter details regarding the format in which the event log file is saved:
+
+ -	**quote**: default _" " "_
+ -	**sep** : default _","_
+
+The loading functions offer additional functionality, which the user may specify using the following fields:
+
+ -	**convertUTF**: Boolean;
+ -	**suppress.invalid.date** : Boolean, if true suppress invalid date;
+ -	**guessDataFormat**: Boolean, if true allows to automatically calculate the date format.
+ 
+Let's try using the functions to load an EventLog:
+```{r, echo=FALSE, eval=FALSE}
+library(pMineR)
+objDL<-dataLoader()
+```
+
+```{r eval=TRUE}
+
+EL<-read.csv("EventLog1.csv",header = T,sep = ",",quote = "")
+
+head(EL)
+
+```
+
+```{r eval=FALSE}
+
+objDL$load.csv(nomeFile = "EventLog1.csv",
+               IDName = "ID",
+               EVENTName = "Event",
+               dateColumnName = "Date",
+               sep  = ",",
+               quote = "",
+               format.column.date = "%Y-%m-%d")
+
+objDL$load.data.frame(mydata = EL,
+                      IDName = "ID",
+                      EVENTName = "Event",
+                      dateColumnName = "Date",
+                      format.column.date = "%Y-%m-%d")
+```
+ 
+
+Once the event log is loaded, the Data Loader class will create structured data that can be accessed using the _getData()_ function.
+
+```{r eval=FALSE}
+
+obj.out<-objDL$getData()
+```
+

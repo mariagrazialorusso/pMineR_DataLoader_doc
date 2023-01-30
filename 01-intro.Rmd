@@ -1,0 +1,17 @@
+# Constructor method: dataLoader()
+
+The first step is to construct a DataLoader class object, from which you could access all the class's methods. To do so we use the constructor method as follows:
+
+```{r eval=FALSE}
+objDL= dataLoader()
+```
+
+
+The consturctor admit the following parameters:
+
+ -	**param verbose.mode**: boolean. If TRUE some messages will appear in console, during the computation; otherwise the computation will be silent.
+ -	**param save.memory**: boolean. If TRUE, dataLoader() avoid to keep in memory the entire original csv.
+ -	**param max.char.length.label**: numeric. It defines the max length of the event name strings.
+Once create the Data Loader object it is possible to run all its function as elements of the data loader object list. 
+
+Once the dataLoader object has been created, it is possible to load Event Log using one of the two methods provided by the DataLoaderclass, which are  _load.csv()_ function and  _load.data.frame()_ function. 
